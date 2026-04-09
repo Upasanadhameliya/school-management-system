@@ -18,7 +18,14 @@ export const TasksPage = () => {
     handleEdit,
     handleCancel,
     handleInputChange,
-    handleSave
+    handleSave,
+    isAdding,
+    newTaskData,
+    addLoading,
+    handleAddNew,
+    handleAddCancel,
+    handleAddInputChange,
+    handleAddSave
   } = useTasks(studentId)
   const [student, setStudent] = useState(null)
   const [studentLoading, setStudentLoading] = useState(true)
@@ -62,16 +69,31 @@ export const TasksPage = () => {
       {error && <p className="error">Error: {error}</p>}
 
       {!loading && !error && (
-        <TaskTable
-          tasks={tasks}
-          editingId={editingId}
-          editedData={editedData}
-          saveLoading={saveLoading}
-          onEdit={handleEdit}
-          onCancel={handleCancel}
-          onInputChange={handleInputChange}
-          onSave={handleSave}
-        />
+        <>
+          <button
+            onClick={handleAddNew}
+            className="btn btn-primary"
+            style={{ marginBottom: '20px' }}
+          >
+            Add Task
+          </button>
+          <TaskTable
+            tasks={tasks}
+            editingId={editingId}
+            editedData={editedData}
+            saveLoading={saveLoading}
+            isAdding={isAdding}
+            newTaskData={newTaskData}
+            addLoading={addLoading}
+            onEdit={handleEdit}
+            onCancel={handleCancel}
+            onInputChange={handleInputChange}
+            onSave={handleSave}
+            onAddCancel={handleAddCancel}
+            onAddInputChange={handleAddInputChange}
+            onAddSave={handleAddSave}
+          />
+        </>
       )}
     </div>
   )

@@ -3,10 +3,16 @@ export const TaskTable = ({
   editingId,
   editedData,
   saveLoading,
+  isAdding,
+  newTaskData,
+  addLoading,
   onEdit,
   onCancel,
   onInputChange,
-  onSave
+  onSave,
+  onAddCancel,
+  onAddInputChange,
+  onAddSave
 }) => {
   return (
     <table className="students-table">
@@ -21,7 +27,64 @@ export const TaskTable = ({
         </tr>
       </thead>
       <tbody>
-        {tasks.length === 0 ? (
+        {isAdding && (
+          <tr className="new-task-row">
+            <td>New</td>
+            <td>
+              <input
+                type="text"
+                value={newTaskData.title || ''}
+                onChange={(e) => onAddInputChange(e, 'title')}
+                className="edit-input"
+                placeholder="Enter title"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                value={newTaskData.description || ''}
+                onChange={(e) => onAddInputChange(e, 'description')}
+                className="edit-input"
+                placeholder="Enter description"
+              />
+            </td>
+            <td>
+              <select
+                value={newTaskData.status || 'pending'}
+                onChange={(e) => onAddInputChange(e, 'status')}
+                className="edit-input"
+              >
+                <option value="pending">Pending</option>
+                <option value="completed">Completed</option>
+              </select>
+            </td>
+            <td>
+              <input
+                type="date"
+                value={newTaskData.due_date || ''}
+                onChange={(e) => onAddInputChange(e, 'due_date')}
+                className="edit-input"
+              />
+            </td>
+            <td>
+              <button
+                onClick={onAddSave}
+                className="btn btn-save"
+                disabled={addLoading}
+              >
+                {addLoading ? 'Creating...' : 'Create'}
+              </button>
+              <button
+                onClick={onAddCancel}
+                className="btn btn-cancel"
+                disabled={addLoading}
+              >
+                Cancel
+              </button>
+            </td>
+          </tr>
+        )}
+        {tasks.length === 0 && !isAdding ? (
           <tr>
             <td colSpan="6" style={{ textAlign: 'center', padding: '20px' }}>
               No tasks found for this student

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { fetchStudentTasks, updateTask } from '../services/api'
+import { fetchStudentTasks, updateTask, createTask } from '../services/api'
 
 export const useTasks = (studentId) => {
   const [tasks, setTasks] = useState([])
@@ -8,6 +8,15 @@ export const useTasks = (studentId) => {
   const [editingId, setEditingId] = useState(null)
   const [editedData, setEditedData] = useState({})
   const [saveLoading, setSaveLoading] = useState(false)
+  const [isAdding, setIsAdding] = useState(false)
+  const [newTaskData, setNewTaskData] = useState({
+    title: '',
+    description: '',
+    status: 'pending',
+    due_date: '',
+    student: studentId
+  })
+  const [addLoading, setAddLoading] = useState(false)
 
   useEffect(() => {
     loadTasks()
@@ -59,6 +68,44 @@ export const useTasks = (studentId) => {
     }
   }
 
+  const handleAddNew = () => {
+    setIsAdding(true)
+    setNewTaskData({
+      title: '',
+      description: '',
+      status: 'pending',
+      due_date: '',
+      student: studentId
+    })
+  }
+
+  const handleAddCancel = () => {
+    setIsAdding(false)
+    setNewTaskData({})
+  }
+
+  const handleAddInputChange = (e, field) => {
+    setNewTaskData({
+      ...newTaskData,
+      [field]: e.target.value
+    })
+  }
+
+  const handleAddSave = async () => {
+    try {
+      setAddLoading(true)
+      const createdTask = await createTask(newTaskData)
+      setTasks([...tasks, createdTask])
+      setIsAdding(false)
+      setNewTaskData({})
+      setError(null)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setAddLoading(false)
+    }
+  }
+
   return {
     tasks,
     loading,
@@ -69,6 +116,13 @@ export const useTasks = (studentId) => {
     handleEdit,
     handleCancel,
     handleInputChange,
-    handleSave
+    handleSave,
+    isAdding,
+    newTaskData,
+    addLoading,
+    handleAddNew,
+    handleAddCancel,
+    handleAddInputChange,
+    handleAddSave
   }
 }

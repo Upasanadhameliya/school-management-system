@@ -100,3 +100,17 @@ export const updateTask = async (id, taskData) => {
 
   return await response.json()
 }
+
+export const createTask = async (taskData) => {
+  const response = await fetch(`${API_BASE}/tasks/`, {
+    method: 'POST',
+    headers: getHeaders(),
+    body: JSON.stringify(taskData)
+  })
+
+  if (!response.ok) {
+    throw new Error(`Error: ${response.status}`)
+  }
+
+  return await response.json()
+}

@@ -1,4 +1,4 @@
-const ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc1NzI5MzQ1LCJpYXQiOjE3NzU3MjU3NDUsImp0aSI6Ijk1MDQ2ZjVkZTU0MjRhNTE5M2YzYmIyYjgzODBlOWFjIiwidXNlcl9pZCI6IjEifQ.wEqlqOUwmwNA3GmQp8NCTPGN67TCEQXYBRXyXkiw-GU'
+const ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc1NzMzMDE4LCJpYXQiOjE3NzU3Mjk0MTgsImp0aSI6IjIwNzdiNThhZGIwMTQxMGY5MmE5ZjU1ZGY4NDczYzFhIiwidXNlcl9pZCI6IjEifQ.JBxbctuIQPzAz3MgLVvOyW_oByPs6UFSWXbXebeg0tI'
 const API_BASE = 'http://127.0.0.1:8000/api'
 
 const getHeaders = () => ({
@@ -113,4 +113,17 @@ export const createTask = async (taskData) => {
   }
 
   return await response.json()
+}
+
+export const deleteTask = async (id) => {
+  const response = await fetch(`${API_BASE}/tasks/${id}/`, {
+    method: 'DELETE',
+    headers: getHeaders()
+  })
+
+  if (!response.ok) {
+    throw new Error(`Error: ${response.status}`)
+  }
+
+  return response
 }

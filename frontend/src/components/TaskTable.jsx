@@ -3,6 +3,7 @@ export const TaskTable = ({
   editingId,
   editedData,
   saveLoading,
+  deleteLoading,
   isAdding,
   newTaskData,
   addLoading,
@@ -10,6 +11,7 @@ export const TaskTable = ({
   onCancel,
   onInputChange,
   onSave,
+  onDelete,
   onAddCancel,
   onAddInputChange,
   onAddSave
@@ -174,12 +176,21 @@ export const TaskTable = ({
                     </button>
                   </>
                 ) : (
-                  <button
-                    onClick={() => onEdit(task)}
-                    className="btn btn-edit"
-                  >
-                    Edit
-                  </button>
+                  <>
+                    <button
+                      onClick={() => onEdit(task)}
+                      className="btn btn-edit"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => onDelete(task.id, task.title)}
+                      className="btn btn-delete"
+                      disabled={deleteLoading}
+                    >
+                      Delete
+                    </button>
+                  </>
                 )}
               </td>
             </tr>

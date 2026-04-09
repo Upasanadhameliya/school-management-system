@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { fetchStudentTasks, updateTask, createTask } from '../services/api'
+import { fetchStudentTasks, updateTask, createTask, deleteTask } from '../services/api'
 
 export const useTasks = (studentId) => {
   const [tasks, setTasks] = useState([])
@@ -8,6 +8,7 @@ export const useTasks = (studentId) => {
   const [editingId, setEditingId] = useState(null)
   const [editedData, setEditedData] = useState({})
   const [saveLoading, setSaveLoading] = useState(false)
+  const [deleteLoading, setDeleteLoading] = useState(false)
   const [isAdding, setIsAdding] = useState(false)
   const [newTaskData, setNewTaskData] = useState({
     title: '',
@@ -68,6 +69,22 @@ export const useTasks = (studentId) => {
     }
   }
 
+  const handleDelete = async (id, title) => {
+    const confirmed = window.confirm(`Are you sure you want to delete the task "${title}"?`)
+    if (!confirmed) return
+
+    try {
+      setDeleteLoading(true)
+      await deleteTask(id)
+      setTasks(tasks.filter(t => t.id !== id))
+      setError(null)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setDeleteLoading(false)
+    }
+  }
+
   const handleAddNew = () => {
     setIsAdding(true)
     setNewTaskData({
@@ -113,10 +130,12 @@ export const useTasks = (studentId) => {
     editingId,
     editedData,
     saveLoading,
+    deleteLoading,
     handleEdit,
     handleCancel,
     handleInputChange,
     handleSave,
+    handleDelete,
     isAdding,
     newTaskData,
     addLoading,

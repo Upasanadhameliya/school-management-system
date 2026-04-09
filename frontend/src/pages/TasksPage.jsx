@@ -15,10 +15,12 @@ export const TasksPage = () => {
     editingId,
     editedData,
     saveLoading,
+    deleteLoading,
     handleEdit,
     handleCancel,
     handleInputChange,
     handleSave,
+    handleDelete,
     isAdding,
     newTaskData,
     addLoading,
@@ -82,6 +84,7 @@ export const TasksPage = () => {
             editingId={editingId}
             editedData={editedData}
             saveLoading={saveLoading}
+            deleteLoading={deleteLoading}
             isAdding={isAdding}
             newTaskData={newTaskData}
             addLoading={addLoading}
@@ -89,6 +92,7 @@ export const TasksPage = () => {
             onCancel={handleCancel}
             onInputChange={handleInputChange}
             onSave={handleSave}
+            onDelete={handleDelete}
             onAddCancel={handleAddCancel}
             onAddInputChange={handleAddInputChange}
             onAddSave={handleAddSave}

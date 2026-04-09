@@ -1,53 +1,18 @@
-import { useStudents } from './hooks/useStudents'
-import { StudentTable } from './components/StudentTable'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { StudentsPage } from './pages/StudentsPage'
+import { TasksPage } from './pages/TasksPage'
 import './App.css'
 
 function App() {
-  const {
-    students,
-    loading,
-    error,
-    editingId,
-    editedData,
-    saveLoading,
-    deleteLoading,
-    handleEdit,
-    handleCancel,
-    handleInputChange,
-    handleSave,
-    handleDelete
-  } = useStudents()
-
   return (
-    <>
-      <div className="container">
-        <h1>School Management System</h1>
-        <h2>Students List</h2>
-
-        {loading && <p className="loading">Loading students...</p>}
-
-        {error && <p className="error">Error: {error}</p>}
-
-        {!loading && students.length === 0 && !error && (
-          <p className="no-students">No students found</p>
-        )}
-
-        {!loading && students.length > 0 && (
-          <StudentTable
-            students={students}
-            editingId={editingId}
-            editedData={editedData}
-            saveLoading={saveLoading}
-            deleteLoading={deleteLoading}
-            onEdit={handleEdit}
-            onCancel={handleCancel}
-            onInputChange={handleInputChange}
-            onSave={handleSave}
-            onDelete={handleDelete}
-          />
-        )}
-      </div>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<div className="container"><h1>School Management System</h1><p>Login Page (coming soon)</p></div>} />
+        <Route path="/students" element={<StudentsPage />} />
+        <Route path="/students/:studentId/tasks" element={<TasksPage />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
   )
 }
 

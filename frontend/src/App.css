@@ -160,3 +160,15 @@ h2 {
   background-color: #da190b;
   box-shadow: 0 2px 4px rgba(244, 67, 54, 0.3);
 }
+
+.btn-primary {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #45a049;
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+}

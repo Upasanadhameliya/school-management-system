@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { fetchStudents, updateStudent, deleteStudent } from '../services/api'
+import { fetchStudents, updateStudent, deleteStudent, createStudent } from '../services/api'
 
 export const useStudents = () => {
   const [students, setStudents] = useState([])
@@ -9,6 +9,15 @@ export const useStudents = () => {
   const [editedData, setEditedData] = useState({})
   const [saveLoading, setSaveLoading] = useState(false)
   const [deleteLoading, setDeleteLoading] = useState(false)
+  const [isAdding, setIsAdding] = useState(false)
+  const [newStudentData, setNewStudentData] = useState({
+    name: '',
+    class_name: '',
+    age: '',
+    email: '',
+    phone: ''
+  })
+  const [addLoading, setAddLoading] = useState(false)
 
   const loadStudents = async () => {
     try {
@@ -76,6 +85,44 @@ export const useStudents = () => {
     }
   }
 
+  const handleAddNew = () => {
+    setIsAdding(true)
+    setNewStudentData({
+      name: '',
+      class_name: '',
+      age: '',
+      email: '',
+      phone: ''
+    })
+  }
+
+  const handleAddCancel = () => {
+    setIsAdding(false)
+    setNewStudentData({})
+  }
+
+  const handleAddInputChange = (e, field) => {
+    setNewStudentData({
+      ...newStudentData,
+      [field]: e.target.value
+    })
+  }
+
+  const handleAddSave = async () => {
+    try {
+      setAddLoading(true)
+      const createdStudent = await createStudent(newStudentData)
+      setStudents([...students, createdStudent])
+      setIsAdding(false)
+      setNewStudentData({})
+      setError(null)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setAddLoading(false)
+    }
+  }
+
   return {
     students,
     loading,
@@ -88,6 +135,13 @@ export const useStudents = () => {
     handleCancel,
     handleInputChange,
     handleSave,
-    handleDelete
+    handleDelete,
+    isAdding,
+    newStudentData,
+    addLoading,
+    handleAddNew,
+    handleAddCancel,
+    handleAddInputChange,
+    handleAddSave
   }
 }

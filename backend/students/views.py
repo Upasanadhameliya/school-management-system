@@ -16,7 +16,7 @@ class StudentViewSet(viewsets.ModelViewSet):
     - PUT /api/students/{id}/ (update)
     - DELETE /api/students/{id}/ (delete)
     """
-    queryset = Student.objects.all()
+    queryset = Student.objects.all().order_by('id')
     serializer_class = StudentSerializer
     permission_classes = [IsAuthenticated]
 

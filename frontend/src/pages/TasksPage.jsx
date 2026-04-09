@@ -8,7 +8,18 @@ import '../App.css'
 export const TasksPage = () => {
   const { studentId } = useParams()
   const navigate = useNavigate()
-  const { tasks, loading, error } = useTasks(studentId)
+  const {
+    tasks,
+    loading,
+    error,
+    editingId,
+    editedData,
+    saveLoading,
+    handleEdit,
+    handleCancel,
+    handleInputChange,
+    handleSave
+  } = useTasks(studentId)
   const [student, setStudent] = useState(null)
   const [studentLoading, setStudentLoading] = useState(true)
 
@@ -51,7 +62,16 @@ export const TasksPage = () => {
       {error && <p className="error">Error: {error}</p>}
 
       {!loading && !error && (
-        <TaskTable tasks={tasks} />
+        <TaskTable
+          tasks={tasks}
+          editingId={editingId}
+          editedData={editedData}
+          saveLoading={saveLoading}
+          onEdit={handleEdit}
+          onCancel={handleCancel}
+          onInputChange={handleInputChange}
+          onSave={handleSave}
+        />
       )}
     </div>
   )

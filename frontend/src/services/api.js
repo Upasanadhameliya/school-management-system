@@ -86,3 +86,17 @@ export const fetchStudent = async (id) => {
 
   return await response.json()
 }
+
+export const updateTask = async (id, taskData) => {
+  const response = await fetch(`${API_BASE}/tasks/${id}/`, {
+    method: 'PUT',
+    headers: getHeaders(),
+    body: JSON.stringify(taskData)
+  })
+
+  if (!response.ok) {
+    throw new Error(`Error: ${response.status}`)
+  }
+
+  return await response.json()
+}

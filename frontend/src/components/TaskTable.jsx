@@ -1,4 +1,13 @@
-export const TaskTable = ({ tasks }) => {
+export const TaskTable = ({
+  tasks,
+  editingId,
+  editedData,
+  saveLoading,
+  onEdit,
+  onCancel,
+  onInputChange,
+  onSave
+}) => {
   return (
     <table className="students-table">
       <thead>
@@ -8,12 +17,13 @@ export const TaskTable = ({ tasks }) => {
           <th>Description</th>
           <th>Status</th>
           <th>Due Date</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         {tasks.length === 0 ? (
           <tr>
-            <td colSpan="5" style={{ textAlign: 'center', padding: '20px' }}>
+            <td colSpan="6" style={{ textAlign: 'center', padding: '20px' }}>
               No tasks found for this student
             </td>
           </tr>
@@ -21,23 +31,94 @@ export const TaskTable = ({ tasks }) => {
           tasks.map((task) => (
             <tr key={task.id}>
               <td>{task.id}</td>
-              <td>{task.title}</td>
-              <td>{task.description || 'N/A'}</td>
               <td>
-                <span
-                  style={{
-                    padding: '4px 8px',
-                    borderRadius: '4px',
-                    backgroundColor: task.status === 'completed' ? '#4caf50' : '#ff9800',
-                    color: 'white',
-                    fontSize: '12px',
-                    fontWeight: '600'
-                  }}
-                >
-                  {task.status}
-                </span>
+                {editingId === task.id ? (
+                  <input
+                    type="text"
+                    value={editedData.title || ''}
+                    onChange={(e) => onInputChange(e, 'title')}
+                    className="edit-input"
+                  />
+                ) : (
+                  task.title
+                )}
               </td>
-              <td>{task.due_date || 'N/A'}</td>
+              <td>
+                {editingId === task.id ? (
+                  <input
+                    type="text"
+                    value={editedData.description || ''}
+                    onChange={(e) => onInputChange(e, 'description')}
+                    className="edit-input"
+                  />
+                ) : (
+                  task.description || 'N/A'
+                )}
+              </td>
+              <td>
+                {editingId === task.id ? (
+                  <select
+                    value={editedData.status || ''}
+                    onChange={(e) => onInputChange(e, 'status')}
+                    className="edit-input"
+                  >
+                    <option value="pending">Pending</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                ) : (
+                  <span
+                    style={{
+                      padding: '4px 8px',
+                      borderRadius: '4px',
+                      backgroundColor: task.status === 'completed' ? '#4caf50' : '#ff9800',
+                      color: 'white',
+                      fontSize: '12px',
+                      fontWeight: '600'
+                    }}
+                  >
+                    {task.status}
+                  </span>
+                )}
+              </td>
+              <td>
+                {editingId === task.id ? (
+                  <input
+                    type="date"
+                    value={editedData.due_date || ''}
+                    onChange={(e) => onInputChange(e, 'due_date')}
+                    className="edit-input"
+                  />
+                ) : (
+                  task.due_date || 'N/A'
+                )}
+              </td>
+              <td>
+                {editingId === task.id ? (
+                  <>
+                    <button
+                      onClick={() => onSave(task.id)}
+                      className="btn btn-save"
+                      disabled={saveLoading}
+                    >
+                      {saveLoading ? 'Saving...' : 'Save'}
+                    </button>
+                    <button
+                      onClick={onCancel}
+                      className="btn btn-cancel"
+                      disabled={saveLoading}
+                    >
+                      Cancel
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => onEdit(task)}
+                    className="btn btn-edit"
+                  >
+                    Edit
+                  </button>
+                )}
+              </td>
             </tr>
           ))
         )}

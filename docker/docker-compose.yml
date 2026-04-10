@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  postgres:
+  db:
     image: postgres:16
     container_name: school_management_db
     environment:
@@ -17,6 +17,59 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - school_network
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: school_management_backend
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    environment:
+      DEBUG: "True"
+      SECRET_KEY: "django-insecure-your-secret-key-change-in-production"
+      DATABASE_NAME: school_management
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres123
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ../backend:/app
+    networks:
+      - school_network
+    entrypoint: >
+      sh -c "python manage.py migrate &&
+             python manage.py shell -c 'from django.contrib.auth.models import User; User.objects.filter(username=\"admin\").exists() or User.objects.create_superuser(\"admin\", \"admin@example.com\", \"admin123\")' &&
+             python manage.py create_dummy_data &&
+             python manage.py runserver 0.0.0.0:8000"
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: school_management_frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    volumes:
+      - ../frontend:/app
+      - /app/node_modules
+    networks:
+      - school_network
 
 volumes:
   postgres_data:
+
+networks:
+  school_network:
+    driver: bridge
+

@@ -1,0 +1,186 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 32px;
+  color: #1976d2;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 20px;
+  color: #555;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.loading, .error, .no-students {
+  padding: 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.loading {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  border-left: 4px solid #1976d2;
+}
+
+.error {
+  background-color: #ffebee;
+  color: #d32f2f;
+  border-left: 4px solid #d32f2f;
+}
+
+.no-students {
+  background-color: #f5f5f5;
+  color: #666;
+  border: 1px solid #ddd;
+}
+
+.students-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.students-table thead {
+  background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+  color: white;
+}
+
+.students-table th {
+  padding: 16px 12px;
+  text-align: left;
+  font-weight: 600;
+  border: none;
+}
+
+.students-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.students-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.students-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.students-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.students-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.edit-input {
+  width: 100%;
+  padding: 8px 6px;
+  border: 2px solid #1976d2;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: #1565c0;
+  box-shadow: 0 0 4px rgba(25, 118, 210, 0.3);
+}
+
+.btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 8px;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-edit {
+  background-color: #1976d2;
+  color: white;
+}
+
+.btn-edit:hover:not(:disabled) {
+  background-color: #1565c0;
+  box-shadow: 0 2px 4px rgba(21, 101, 192, 0.3);
+}
+
+.btn-save {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-save:hover:not(:disabled) {
+  background-color: #45a049;
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+}
+
+.btn-cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-cancel:hover:not(:disabled) {
+  background-color: #da190b;
+  box-shadow: 0 2px 4px rgba(244, 67, 54, 0.3);
+}
+
+.btn-delete {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-delete:hover:not(:disabled) {
+  background-color: #da190b;
+  box-shadow: 0 2px 4px rgba(244, 67, 54, 0.3);
+}
+
+.btn-primary {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #45a049;
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+}
+
+.btn-secondary {
+  background-color: #757575;
+  color: white;
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #616161;
+  box-shadow: 0 2px 4px rgba(97, 97, 97, 0.3);
+}

@@ -16,7 +16,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     - PUT /api/tasks/{id}/ (update - includes marking as completed)
     - DELETE /api/tasks/{id}/ (delete)
     """
-    queryset = Task.objects.all()
+    queryset = Task.objects.all().order_by('id')
     serializer_class = TaskSerializer
     permission_classes = [IsAuthenticated]
 

@@ -16,7 +16,7 @@ class StudentViewSet(viewsets.ModelViewSet):
     - PUT /api/students/{id}/ (update)
     - DELETE /api/students/{id}/ (delete)
     """
-    queryset = Student.objects.all()
+    queryset = Student.objects.all().order_by('id')
     serializer_class = StudentSerializer
     permission_classes = [IsAuthenticated]
 
@@ -24,7 +24,7 @@ class StudentViewSet(viewsets.ModelViewSet):
     def tasks(self, request, pk=None):
         """Get all tasks for a specific student."""
         student = self.get_object()
-        tasks = student.tasks.all()
+        tasks = student.tasks.all().order_by('id')
         from tasks.serializers import TaskSerializer
         serializer = TaskSerializer(tasks, many=True)
         return Response(serializer.data)

@@ -1,10 +1,12 @@
-const ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc1Nzk5OTA2LCJpYXQiOjE3NzU3OTYzMDYsImp0aSI6ImExMGEzMTk5ZTlkYzQ4Zjg5Zjc4NTEwZTFmNGVjOGE5IiwidXNlcl9pZCI6IjEifQ.U_DRKT52QyxfO6C-RrL7qKjWsiM5IpNP2Ik4v8OmUSE'
 const API_BASE = 'http://127.0.0.1:8000/api'
 
-const getHeaders = () => ({
-  'Authorization': `Bearer ${ACCESS_TOKEN}`,
-  'Content-Type': 'application/json'
-})
+const getHeaders = () => {
+  const accessToken = localStorage.getItem('access_token')
+  return {
+    'Authorization': `Bearer ${accessToken}`,
+    'Content-Type': 'application/json'
+  }
+}
 
 export const fetchStudents = async () => {
   const response = await fetch(`${API_BASE}/students/`, {
